@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.FragmentLogin"
+    android:background="@color/primary_background"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/yanone_regular"
+        android:text="Вход"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:textSize="42sp"
+        android:textColor="@color/secondary_background"/>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center"
+        app:srcCompat="@drawable/gerb"
+        android:contentDescription="Kranoyarsk" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/textedit_login"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="30dp"
+        android:inputType="textEmailAddress"
+        android:hint="@string/textedit_login"
+        android:textColorHint="#C0C0C0"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:textColor="@color/white"
+        android:fontFamily="@font/yanone_regular"
+        android:background="@drawable/rounded_edittext"
+        android:layout_gravity="center"/>
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/textedit_password"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="15dp"
+        android:inputType="textPassword"
+        android:hint="@string/textedit_password"
+        android:textColorHint="#C0C0C0"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:textColor="@color/white"
+        android:fontFamily="@font/yanone_regular"
+        android:background="@drawable/rounded_edittext"
+        android:layout_gravity="center"/>
+
+    <TextView
+        android:id="@+id/button_login"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="60dp"
+        android:layout_gravity="center"
+        android:gravity="center_vertical|center"
+        android:fontFamily="@font/yanone_regular"
+        android:textSize="20sp"
+        android:text="@string/textview_login"
+        android:textColor="@color/white"
+        android:background="@drawable/rounded_button"/>
+
+    <TextView
+        android:id="@+id/button_register"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:layout_height="40dp"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:text="@string/textview_register"
+        android:fontFamily="@font/yanone_regular"/>
+
+
+</LinearLayout>
