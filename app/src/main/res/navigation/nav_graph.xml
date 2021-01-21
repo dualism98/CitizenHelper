@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/fragmentLogin"
-        android:name="com.dualism.dotaheroes.fragments.FragmentLogin"
+        android:name="com.dualism.citizenhelper.fragments.FragmentLogin"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -20,7 +20,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentRegister"
-        android:name="com.dualism.dotaheroes.fragments.FragmentRegister"
+        android:name="com.dualism.citizenhelper.fragments.FragmentRegister"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" >
     </fragment>

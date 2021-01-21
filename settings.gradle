@@ -1,4 +1,4 @@
-rootProject.name = "DotaHeroes"
+rootProject.name = "CitizenHelper"
 include ':app'
 include ':domain'
 include ':data'

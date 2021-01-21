@@ -1,7 +1,7 @@
-package com.dualism.dotaheroes.services
+package com.dualism.citizenhelper.services
 
-import com.dualism.dotaheroes.models.regUser
-import com.dualism.dotaheroes.models.userToken
+import com.dualism.citizenhelper.models.regUser
+import com.dualism.citizenhelper.models.userToken
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
