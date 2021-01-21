@@ -1,4 +1,4 @@
-package com.dualism.citizenhelper.fragments
+package com.dualism.citizenhelper.fragments.auth
 
 import android.content.Context
 import android.content.Intent
