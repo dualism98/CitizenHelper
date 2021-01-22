@@ -2,8 +2,12 @@ package com.dualism.citizenhelper.activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.dualism.citizenhelper.R
-import kotlinx.android.synthetic.main.activity_user.*
+import com.dualism.citizenhelper.fragments.main.ProfileFragment
+import com.dualism.citizenhelper.fragments.main.RequestsFragment
+import com.dualism.citizenhelper.fragments.main.TopicsFragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 class UserActivity : AppCompatActivity() {
@@ -15,27 +19,37 @@ class UserActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_user)
 
-        bottomNav.setOnNavigationItemSelectedListener {
+        loadFragment(TopicsFragment())
+
+
+        //getting bottom navigation view and attaching the listener
+        val navigation = findViewById<BottomNavigationView>(R.id.bottomNav)
+        navigation.setOnNavigationItemSelectedListener{
             when (it.itemId) {
                 R.id.navigation_themes -> {
-                    setContent("Home")
-                    true
+                    loadFragment(TopicsFragment())
                 }
                 R.id.navigation_requests -> {
-                    setContent("Notification")
-                    true
+                    loadFragment(RequestsFragment())
                 }
                 R.id.navigation_profile -> {
-                    setContent("Search")
-                    true
+                    loadFragment(ProfileFragment())
                 }
                 else -> false
             }
         }
+
     }
 
-    private fun setContent(content: String) {
-        setTitle(content)
-        tvLabel.text = content
+    private fun loadFragment(fragment: Fragment?): Boolean {
+        //switching fragment
+        if (fragment != null) {
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .commit()
+            return true
+        }
+        return false
     }
 }
