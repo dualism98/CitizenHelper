@@ -1,4 +1,4 @@
-package com.dualism.dotaheroes.services
+package com.dualism.citizenhelper.services
 
 import okhttp3.Credentials
 import okhttp3.OkHttpClient

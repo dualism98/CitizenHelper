@@ -1,11 +1,11 @@
-package com.dualism.dotaheroes.activities
+package com.dualism.citizenhelper.activities
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
-import com.dualism.dotaheroes.R
+import com.dualism.citizenhelper.R
 
 class SplashActivity: AppCompatActivity() {
     private val SPLASH_TIME_OUT = 2000L
@@ -13,7 +13,7 @@ class SplashActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         //Remove title bar
-        getSupportActionBar()?.hide();
+        supportActionBar?.hide();
 
         setContentView(R.layout.activity_splash)
 
@@ -23,7 +23,7 @@ class SplashActivity: AppCompatActivity() {
         )
 
         val token = userData.getString("token", "NONE")
-        println("TOKEN: " + token)
+
         if(token != "NONE"){
             println(token)
             Handler().postDelayed(
@@ -36,7 +36,7 @@ class SplashActivity: AppCompatActivity() {
         else{
             Handler().postDelayed(
                 {
-                    val intent = Intent(this@SplashActivity, MainActivity::class.java)
+                    val intent = Intent(this@SplashActivity, AuthActivity::class.java)
                     startActivity(intent)
                     finish()
                 }, SPLASH_TIME_OUT)

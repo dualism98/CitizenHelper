@@ -1,4 +1,4 @@
-package com.dualism.dotaheroes.fragments
+package com.dualism.citizenhelper.fragments.auth
 
 import android.content.Context
 import android.content.Intent
@@ -10,10 +10,10 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
-import com.dualism.dotaheroes.R
-import com.dualism.dotaheroes.activities.UserActivity
-import com.dualism.dotaheroes.models.regUser
-import com.dualism.dotaheroes.services.*
+import com.dualism.citizenhelper.R
+import com.dualism.citizenhelper.activities.UserActivity
+import com.dualism.citizenhelper.models.regUser
+import com.dualism.citizenhelper.services.*
 import kotlinx.android.synthetic.main.fragment_register.view.*
 
 

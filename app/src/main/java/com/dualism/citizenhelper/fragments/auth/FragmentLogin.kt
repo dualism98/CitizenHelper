@@ -1,4 +1,4 @@
-package com.dualism.dotaheroes.fragments
+package com.dualism.citizenhelper.fragments.auth
 
 import android.content.Context
 import android.content.Intent
@@ -11,9 +11,9 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
 import androidx.navigation.findNavController
-import com.dualism.dotaheroes.R
-import com.dualism.dotaheroes.activities.UserActivity
-import com.dualism.dotaheroes.services.RestApiService
+import com.dualism.citizenhelper.R
+import com.dualism.citizenhelper.activities.UserActivity
+import com.dualism.citizenhelper.services.RestApiService
 import kotlinx.android.synthetic.main.fragment_login.view.*
 
 class FragmentLogin : Fragment() {

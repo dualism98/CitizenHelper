@@ -1,4 +1,4 @@
-package com.dualism.dotaheroes.models
+package com.dualism.citizenhelper.models
 
 import com.google.gson.annotations.SerializedName
 
