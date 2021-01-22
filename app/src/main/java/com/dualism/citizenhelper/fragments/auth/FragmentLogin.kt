@@ -59,6 +59,7 @@ class FragmentLogin : Fragment() {
 
                     val intent = Intent(context, UserActivity::class.java)
                     startActivity(intent)
+                    activity?.finish()
                 } else {
                     val toast = Toast.makeText(context, "Неверный логин/пароль", Toast.LENGTH_SHORT)
                     toast.show()

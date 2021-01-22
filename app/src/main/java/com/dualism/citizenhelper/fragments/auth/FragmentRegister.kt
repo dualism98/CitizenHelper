@@ -73,6 +73,7 @@ class FragmentRegister : Fragment() {
 
                     val intent = Intent(context, UserActivity::class.java)
                     startActivity(intent)
+                    activity?.finish()
                 } else {
                     val toast = Toast.makeText(
                         context,
