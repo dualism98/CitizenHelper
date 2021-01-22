@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
 import com.dualism.citizenhelper.R
 import com.dualism.citizenhelper.activities.AuthActivity
+import com.dualism.citizenhelper.services.StorageService
 import kotlinx.android.synthetic.main.fragment_profile.view.*
 
 class ProfileFragment : Fragment() {
@@ -28,13 +29,8 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         view.button_exit.setOnClickListener { view ->
-            val userData = requireContext().getSharedPreferences(
-                "user_storage",
-                Context.MODE_PRIVATE
-            )
-            val editor = userData.edit()
-            editor.remove("token")
-            editor.apply()
+            val storage = StorageService()
+            storage.removeString(requireContext(),"token")
 
             val intent = Intent(context, AuthActivity::class.java)
             startActivity(intent)

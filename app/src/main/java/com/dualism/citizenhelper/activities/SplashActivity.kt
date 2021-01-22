@@ -5,7 +5,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
 import com.dualism.citizenhelper.R
+import com.dualism.citizenhelper.services.StorageService
 
 class SplashActivity: AppCompatActivity() {
     private val SPLASH_TIME_OUT = 2000L
@@ -17,12 +19,10 @@ class SplashActivity: AppCompatActivity() {
 
         setContentView(R.layout.activity_splash)
 
-        val userData = getSharedPreferences(
-            "user_storage",
-            Context.MODE_PRIVATE
-        )
+        val storage = StorageService()
+        val token = storage.getString(this,"token", "NONE")
 
-        val token = userData.getString("token", "NONE")
+        println("TOKEN: $token")
 
         if(token != "NONE"){
             println(token)

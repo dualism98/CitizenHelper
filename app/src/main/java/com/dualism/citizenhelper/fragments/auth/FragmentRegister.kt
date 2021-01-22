@@ -62,14 +62,8 @@ class FragmentRegister : Fragment() {
 
             apiService.addUser(userInfo) {
                 if (it?.token != null) {
-                    print("REGISTERED")
-                    val userData = requireContext().getSharedPreferences(
-                        "user_storage",
-                        Context.MODE_PRIVATE
-                    )
-                    val editor = userData.edit()
-                    editor.putString("token", it.token)
-                    editor.apply()
+                    val storage = StorageService()
+                    storage.setString(requireContext(),"token", it.token)
 
                     val intent = Intent(context, UserActivity::class.java)
                     startActivity(intent)

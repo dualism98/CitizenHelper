@@ -14,6 +14,7 @@ import androidx.navigation.findNavController
 import com.dualism.citizenhelper.R
 import com.dualism.citizenhelper.activities.UserActivity
 import com.dualism.citizenhelper.services.RestApiService
+import com.dualism.citizenhelper.services.StorageService
 import kotlinx.android.synthetic.main.fragment_login.view.*
 
 class FragmentLogin : Fragment() {
@@ -49,13 +50,8 @@ class FragmentLogin : Fragment() {
             val apiService = RestApiService()
             apiService.signInUser(headerMap) {
                 if (it?.token != null) {
-                    val userData = requireContext().getSharedPreferences(
-                        "user_storage",
-                        Context.MODE_PRIVATE
-                    )
-                    val editor = userData.edit()
-                    editor.putString("token", it.token)
-                    editor.apply()
+                    val storage = StorageService()
+                    storage.setString(requireContext(),"token", it.token)
 
                     val intent = Intent(context, UserActivity::class.java)
                     startActivity(intent)
