@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.navigation.findNavController
 import com.dualism.citizenhelper.R
@@ -37,9 +38,10 @@ class FragmentLogin : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val login = view.findViewById<View>(R.id.textedit_login) as EditText
         val password = view.findViewById<View>(R.id.textedit_password) as EditText
+        val loadingBar = view.findViewById<View>(R.id.signin_loading) as ProgressBar
 
         view.button_login.setOnClickListener{ view ->
-
+            loadingBar.visibility = View.VISIBLE
             val base = login.text.toString() + ':' + password.text.toString()
             val header = "Basic " + Base64.encodeToString(base.toByteArray(), Base64.NO_WRAP)
 
@@ -57,6 +59,7 @@ class FragmentLogin : Fragment() {
                     startActivity(intent)
                     activity?.finish()
                 } else {
+                    loadingBar.visibility = View.GONE
                     val toast = Toast.makeText(context, "Неверный логин/пароль", Toast.LENGTH_SHORT)
                     toast.show()
                 }

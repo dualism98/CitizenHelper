@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
@@ -30,8 +31,6 @@ class FragmentRegister : Fragment() {
 
         val view: View = inflater.inflate(R.layout.fragment_register, container, false)
 
-
-
         // Return the fragment view/layout
         return view
     }
@@ -46,11 +45,13 @@ class FragmentRegister : Fragment() {
         val email = view.findViewById<View>(R.id.textedit_register_email) as EditText
         val password = view.findViewById<View>(R.id.textedit_register_password) as EditText
 
+        val loadingBar = view.findViewById<View>(R.id.register_loading) as ProgressBar
+
         view.back_button.setOnClickListener{ view ->
             view.findNavController().popBackStack()
         }
         view.button_attempt_register.setOnClickListener { view ->
-
+            loadingBar.visibility = View.VISIBLE
             val FIO: String = lastname.text.toString() + " " + firstName.text.toString() + " " + middleName.text.toString()
             val apiService = RestApiService()
             val userInfo = regUser(
@@ -69,6 +70,7 @@ class FragmentRegister : Fragment() {
                     startActivity(intent)
                     activity?.finish()
                 } else {
+                    loadingBar.visibility = View.GONE
                     val toast = Toast.makeText(
                         context,
                             "",
