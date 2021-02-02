@@ -54,6 +54,9 @@ class FragmentLogin : Fragment() {
                 if (it?.token != null) {
                     val storage = StorageService()
                     storage.setString(requireContext(),"token", it.token)
+                    storage.setString(requireContext(),"name", it.full_name)
+                    storage.setString(requireContext(), "email", it.email)
+                    storage.setString(requireContext(), "address", it.address)
 
                     val intent = Intent(context, UserActivity::class.java)
                     startActivity(intent)

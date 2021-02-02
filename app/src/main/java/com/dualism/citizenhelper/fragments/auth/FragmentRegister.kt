@@ -1,6 +1,5 @@
 package com.dualism.citizenhelper.fragments.auth
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,8 +12,11 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.dualism.citizenhelper.R
 import com.dualism.citizenhelper.activities.UserActivity
-import com.dualism.citizenhelper.models.regUser
+import com.dualism.citizenhelper.models.RegUser
+import com.dualism.citizenhelper.models.RegisterError
+import com.dualism.citizenhelper.models.UserResponse
 import com.dualism.citizenhelper.services.*
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_register.view.*
 
 
@@ -30,7 +32,6 @@ class FragmentRegister : Fragment() {
     ): View {
 
         val view: View = inflater.inflate(R.layout.fragment_register, container, false)
-
         // Return the fragment view/layout
         return view
     }
@@ -54,7 +55,7 @@ class FragmentRegister : Fragment() {
             loadingBar.visibility = View.VISIBLE
             val FIO: String = lastname.text.toString() + " " + firstName.text.toString() + " " + middleName.text.toString()
             val apiService = RestApiService()
-            val userInfo = regUser(
+            val userInfo = RegUser(
                 full_name = FIO,
                 address = address.text.toString(),
                 email = email.text.toString(),
@@ -62,18 +63,23 @@ class FragmentRegister : Fragment() {
             )
 
             apiService.addUser(userInfo) {
-                if (it?.token != null) {
+                if (it != null) {
+                    val res = it as UserResponse
                     val storage = StorageService()
-                    storage.setString(requireContext(),"token", it.token)
+                    storage.setString(requireContext(), "token", res.token)
+                    storage.setString(requireContext(),"name", res.full_name)
+                    storage.setString(requireContext(), "email", res.email)
+                    storage.setString(requireContext(), "address", res.address)
 
                     val intent = Intent(context, UserActivity::class.java)
                     startActivity(intent)
                     activity?.finish()
                 } else {
+//                    val codes: RegisterError = it as RegisterError
                     loadingBar.visibility = View.GONE
                     val toast = Toast.makeText(
                         context,
-                            "",
+                            "Неверно введены поля",
                         Toast.LENGTH_SHORT
                     )
                     toast.show()
