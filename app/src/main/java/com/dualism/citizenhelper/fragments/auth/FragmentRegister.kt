@@ -2,6 +2,7 @@ package com.dualism.citizenhelper.fragments.auth
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +14,6 @@ import androidx.navigation.findNavController
 import com.dualism.citizenhelper.R
 import com.dualism.citizenhelper.activities.UserActivity
 import com.dualism.citizenhelper.models.RegUser
-import com.dualism.citizenhelper.models.RegisterError
 import com.dualism.citizenhelper.models.UserResponse
 import com.dualism.citizenhelper.services.*
 import com.google.gson.Gson
@@ -62,9 +62,13 @@ class FragmentRegister : Fragment() {
                 password = password.text.toString()
             )
 
-            apiService.addUser(userInfo) {
-                if (it != null) {
-                    val res = it as UserResponse
+            apiService.addUser(userInfo) { b: Boolean, s: String? ->
+                if (s != null) {
+                    Log.v("RES", s)
+                }
+
+                if (b) {
+                    val res = Gson().fromJson(s, UserResponse::class.java)
                     val storage = StorageService()
                     storage.setString(requireContext(), "token", res.token)
                     storage.setString(requireContext(),"name", res.full_name)
@@ -75,18 +79,11 @@ class FragmentRegister : Fragment() {
                     startActivity(intent)
                     activity?.finish()
                 } else {
-//                    val codes: RegisterError = it as RegisterError
                     loadingBar.visibility = View.GONE
-                    val toast = Toast.makeText(
-                        context,
-                            "Неверно введены поля",
-                        Toast.LENGTH_SHORT
-                    )
-                    toast.show()
+                    Toast.makeText(requireContext(), s, Toast.LENGTH_SHORT).show()
                 }
             }
         }
 
     }
-
 }

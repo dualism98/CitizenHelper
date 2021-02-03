@@ -1,35 +1,42 @@
 package com.dualism.citizenhelper.services
 
+import android.util.Log
 import com.dualism.citizenhelper.models.RegUser
 import com.dualism.citizenhelper.models.RegisterError
 import com.dualism.citizenhelper.models.UserResponse
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.http.HeaderMap
+import java.io.IOException
 
 
 class RestApiService {
-    fun addUser(userData: RegUser, onResult: (JsonObject?) -> Unit){
+    fun addUser(userData: RegUser, onResult: (Boolean, String?) -> Unit){
         val retrofit = ServiceBuilder.buildService(RegApi::class.java)
         retrofit.addUser(userData)
             .enqueue(
                     object : Callback<JsonObject> {
                         override fun onFailure(call: Call<JsonObject>, t: Throwable) {
-                            onResult(null)
+                            onResult(false, null)
                         }
 
                         override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
                             if (response.code() == 200) {
                                 val addedUser: UserResponse? = Gson().fromJson(response.body(), UserResponse::class.java)
-
-                                // Заглушка для тестов
-                                onResult(null)
+                                onResult(true, response.body().toString())
                             } else {
-                                val regError: RegisterError? = Gson().fromJson(response.body(), RegisterError::class.java)
-                                onResult(null)
+                                val gson = GsonBuilder().create()
+                                try {
+                                    val mError: RegisterError = gson.fromJson(response.errorBody()!!.string(), RegisterError::class.java)
+                                    val message = errorTypes[mError.codes[0]]
+                                    onResult(false, message)
+                                } catch (e: IOException) {
+                                    // handle failure to read error
+                                }
                             }
                         }
                     }

@@ -11,7 +11,6 @@ interface AuthApi {
 }
 
 interface RegApi {
-    @Headers("Content-Type: application/json")
     @POST("/api/v1/user/")
     fun addUser(@Body userData: RegUser): Call<JsonObject>
 }
