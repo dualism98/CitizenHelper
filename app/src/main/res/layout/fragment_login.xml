@@ -60,9 +60,9 @@
         android:id="@+id/button_login"
         android:layout_width="300dp"
         android:layout_height="40dp"
-        android:layout_marginTop="60dp"
         android:layout_gravity="center"
         android:gravity="center_vertical|center"
+        android:layout_marginTop="30dp"
         android:fontFamily="@font/yanone_regular"
         android:textSize="20sp"
         android:text="@string/textview_login"
@@ -79,6 +79,20 @@
         android:textColor="@color/white"
         android:text="@string/textview_register"
         android:fontFamily="@font/yanone_regular"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:id="@+id/signin_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone"/>
+
+    </RelativeLayout>
+
 
 
 </LinearLayout>

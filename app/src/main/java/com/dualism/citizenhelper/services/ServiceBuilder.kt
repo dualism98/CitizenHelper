@@ -1,10 +1,9 @@
 package com.dualism.citizenhelper.services
 
-import okhttp3.Credentials
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import okhttp3.Interceptor
 
 object ServiceBuilder {
     private val client = OkHttpClient.Builder()
@@ -12,7 +11,8 @@ object ServiceBuilder {
 
 
     private val retrofit = Retrofit.Builder()
-        .baseUrl("http://msu.w0rng.ru")
+        .baseUrl("https://msu.w0rng.ru")
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .addConverterFactory(GsonConverterFactory.create())
         .client(client)
         .build()

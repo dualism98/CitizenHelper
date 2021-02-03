@@ -1,19 +1,22 @@
 package com.dualism.citizenhelper.fragments.auth
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.dualism.citizenhelper.R
 import com.dualism.citizenhelper.activities.UserActivity
-import com.dualism.citizenhelper.models.regUser
+import com.dualism.citizenhelper.models.RegUser
+import com.dualism.citizenhelper.models.UserResponse
 import com.dualism.citizenhelper.services.*
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_register.view.*
 
 
@@ -29,9 +32,6 @@ class FragmentRegister : Fragment() {
     ): View {
 
         val view: View = inflater.inflate(R.layout.fragment_register, container, false)
-
-
-
         // Return the fragment view/layout
         return view
     }
@@ -46,44 +46,44 @@ class FragmentRegister : Fragment() {
         val email = view.findViewById<View>(R.id.textedit_register_email) as EditText
         val password = view.findViewById<View>(R.id.textedit_register_password) as EditText
 
+        val loadingBar = view.findViewById<View>(R.id.register_loading) as ProgressBar
+
         view.back_button.setOnClickListener{ view ->
             view.findNavController().popBackStack()
         }
         view.button_attempt_register.setOnClickListener { view ->
-
+            loadingBar.visibility = View.VISIBLE
             val FIO: String = lastname.text.toString() + " " + firstName.text.toString() + " " + middleName.text.toString()
             val apiService = RestApiService()
-            val userInfo = regUser(
+            val userInfo = RegUser(
                 full_name = FIO,
                 address = address.text.toString(),
                 email = email.text.toString(),
                 password = password.text.toString()
             )
 
-            apiService.addUser(userInfo) {
-                if (it?.token != null) {
-                    print("REGISTERED")
-                    val userData = requireContext().getSharedPreferences(
-                        "user_storage",
-                        Context.MODE_PRIVATE
-                    )
-                    val editor = userData.edit()
-                    editor.putString("token", it.token)
-                    editor.apply()
+            apiService.addUser(userInfo) { b: Boolean, s: String? ->
+                if (s != null) {
+                    Log.v("RES", s)
+                }
+
+                if (b) {
+                    val res = Gson().fromJson(s, UserResponse::class.java)
+                    val storage = StorageService()
+                    storage.setString(requireContext(), "token", res.token)
+                    storage.setString(requireContext(),"name", res.full_name)
+                    storage.setString(requireContext(), "email", res.email)
+                    storage.setString(requireContext(), "address", res.address)
 
                     val intent = Intent(context, UserActivity::class.java)
                     startActivity(intent)
+                    activity?.finish()
                 } else {
-                    val toast = Toast.makeText(
-                        context,
-                            "",
-                        Toast.LENGTH_SHORT
-                    )
-                    toast.show()
+                    loadingBar.visibility = View.GONE
+                    Toast.makeText(requireContext(), s, Toast.LENGTH_SHORT).show()
                 }
             }
         }
 
     }
-
 }
