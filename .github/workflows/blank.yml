@@ -24,3 +24,10 @@ jobs:
       # Build Debug version
       - name: Build with Gradle
         run: ./gradlew assembleDebug
+      
+      # Upload APK as artifact
+      - name: Upload APK
+        uses: actions/upload-artifact@v1
+        with:
+            name: app
+            path: app/build/outputs/apk/debug/app-debug.apk
